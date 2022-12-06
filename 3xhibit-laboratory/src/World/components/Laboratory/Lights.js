@@ -22,7 +22,7 @@ const Lights = () => {
           rotation-x={Math.PI}
           scale={1}
           color={neonColor}
-          intensity={10}
+          intensity={neonEnabled ? 10 : 0}
           form='rect'
         />
       </Environment>
