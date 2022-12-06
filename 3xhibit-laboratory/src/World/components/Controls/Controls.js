@@ -26,9 +26,11 @@ const Controls = () => {
     setFlashlightIntensity: state.setFlashlightIntensity,
   }));
 
-  const { color, setColor } = useCreation((state) => ({
+  const { color, pointSize, setColor, setPointSize } = useCreation((state) => ({
     color: state.color,
+    pointSize: state.pointSize,
     setColor: state.setColor,
+    setPointSize: state.setPointSize,
   }));
 
   useControls('Laboratory', {
@@ -57,6 +59,12 @@ const Controls = () => {
     color: {
       value: color,
       onChange: (color) => setColor(color),
+    },
+    'point size': {
+      value: pointSize,
+      onChange: (pointSize) => setPointSize(pointSize),
+      min: 1,
+      max: 6,
     },
   });
 
