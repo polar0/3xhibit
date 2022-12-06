@@ -2,9 +2,6 @@ import Lights from './Lights';
 import Sphere from '../Sphere';
 import useLab from '../../../hooks/useLab';
 import { MeshReflectorMaterial } from '@react-three/drei';
-import { DepthOfField, EffectComposer, SSR } from '@react-three/postprocessing';
-import { useControls } from 'leva';
-import { useEffect } from 'react';
 
 const Laboratory = () => {
   return (
@@ -20,6 +17,7 @@ const Structure = () => {
   const { floor } = useLab((state) => ({
     floor: state.floor,
   }));
+
   return (
     <group>
       {/* Floor */}
