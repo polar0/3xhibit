@@ -14,7 +14,13 @@ const World = () => {
       <color attach='background' args={[background.color]} />
 
       <Perf position='top-left' />
-      {/* <OrbitControls /> */}
+      <OrbitControls
+        enablePan={false}
+        enableRotate={false}
+        zoomSpeed={0.5}
+        minDistance={3}
+        maxDistance={10}
+      />
 
       <Laboratory />
       <Controls />

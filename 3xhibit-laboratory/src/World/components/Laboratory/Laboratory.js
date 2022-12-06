@@ -23,7 +23,48 @@ const Structure = () => {
   return (
     <group>
       {/* Floor */}
-      <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
+      <mesh position-y={-2} rotation-x={-Math.PI * 0.5} scale={10}>
+        <planeGeometry />
+        <MeshReflectorMaterial
+          resolution={512}
+          color={floor.color}
+          blur={[1000, 1000]}
+          mixBlur={1}
+          mirror={0.5}
+        />
+      </mesh>
+
+      {/* Front wall */}
+      <mesh
+        position-z={-5}
+        rotation-y={Math.PI}
+        rotation-x={-Math.PI}
+        scale={10}
+      >
+        <planeGeometry />
+        <MeshReflectorMaterial
+          resolution={512}
+          color={floor.color}
+          blur={[1000, 1000]}
+          mixBlur={1}
+          mirror={0.5}
+        />
+      </mesh>
+
+      {/* Left wall */}
+      <mesh position-x={-5} rotation-y={Math.PI * 0.5} scale={10}>
+        <planeGeometry />
+        <MeshReflectorMaterial
+          resolution={512}
+          color={floor.color}
+          blur={[1000, 1000]}
+          mixBlur={1}
+          mirror={0.5}
+        />
+      </mesh>
+
+      {/* Right wall */}
+      <mesh position-x={5} rotation-y={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
         <MeshReflectorMaterial
           resolution={512}
@@ -35,12 +76,19 @@ const Structure = () => {
       </mesh>
 
       {/* Back wall */}
-      <mesh
-        position-z={-5}
-        rotation-y={Math.PI}
-        rotation-x={-Math.PI}
-        scale={10}
-      >
+      <mesh position-z={5} rotation-x={Math.PI} scale={10}>
+        <planeGeometry />
+        <MeshReflectorMaterial
+          resolution={512}
+          color={floor.color}
+          blur={[1000, 1000]}
+          mixBlur={1}
+          mirror={0.5}
+        />
+      </mesh>
+
+      {/* Ceiling */}
+      <mesh position-y={5} rotation-x={Math.PI * 0.5} scale={10}>
         <planeGeometry />
         <MeshReflectorMaterial
           resolution={512}
