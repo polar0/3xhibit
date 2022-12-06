@@ -6,7 +6,7 @@ export default create((set) => ({
    */
   // States
   themes: ['light', 'dark'],
-  activeTheme: 'light',
+  activeTheme: 'dark',
   background: {
     color: 'ivory',
   },
@@ -52,8 +52,8 @@ export default create((set) => ({
    */
   // States
   neonEnabled: true,
-  neonColor: '#ffffffff',
-  flashlightIntensity: 0.4,
+  neonColor: '#ffffff',
+  flashlightIntensity: 0,
   // Setters
   setNeonEnabled: (enabled) => set({ neonEnabled: enabled }),
   setNeonColor: (color) => set({ neonColor: color }),
