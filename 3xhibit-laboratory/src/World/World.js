@@ -1,29 +1,37 @@
 import Laboratory from './components/Laboratory';
-import Controls from './components/Controls';
-import useLab from '../hooks/useLab';
+import useGlobal from '../hooks/useGlobal';
+import { LabControls } from './components/Controls';
 import { OrbitControls } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
+import { useEffect } from 'react';
 
 const World = () => {
-  const { background } = useLab((state) => ({
-    background: state.background,
+  const { activeLocation } = useGlobal((state) => ({
+    activeLocation: state.activeLocation,
   }));
+
+  useEffect(() => {
+    console.log(activeLocation);
+  }, [activeLocation]);
 
   return (
     <>
-      <color attach='background' args={[background.color]} />
-
       <Perf position='top-left' />
-      <OrbitControls
-        enablePan={false}
-        enableRotate={false}
-        zoomSpeed={0.5}
-        minDistance={3}
-        maxDistance={10}
-      />
 
-      <Laboratory />
-      <Controls />
+      {/* Lab */}
+      {activeLocation === 'laboratory' ? (
+        <>
+          <OrbitControls
+            enablePan={false}
+            enableRotate={false}
+            zoomSpeed={0.5}
+            minDistance={3}
+            maxDistance={10}
+          />
+          <Laboratory />
+          <LabControls />
+        </>
+      ) : null}
     </>
   );
 };
