@@ -1,6 +1,7 @@
 import simulationVertexShader from './shaders/simulationVertexShader';
 import simulationFragmentShader from './shaders/simulationFragmentShader';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 
 const getRandomDataSphere = (width, height) => {
   // we need to create a vec4 since we're passing the positions to the fragment shader
@@ -71,7 +72,16 @@ class SimulationMaterial extends THREE.ShaderMaterial {
       vertexShader: simulationVertexShader,
       fragmentShader: simulationFragmentShader,
     });
+
+    this.positionsA = simulationUniforms.positionsA;
+    this.positionsB = simulationUniforms.positionsB;
   }
+
+  update = () => {
+    // Update the position textures so it doesn't draw the initial shape again and again at each render
+    this.uniforms.positionsA.value.needsUpdate = true;
+    this.uniforms.positionsB.value.needsUpdate = true;
+  };
 }
 
 export default SimulationMaterial;

@@ -34,6 +34,9 @@ const Sphere = () => {
   ]);
   const uvs = new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]);
 
+  // Rendertarget.texture must be updated when changing things such as lights
+  // we need to prevent this
+
   const renderTarget = useFBO(size, size, {
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
@@ -45,11 +48,13 @@ const Sphere = () => {
   const particlesPosition = useMemo(() => {
     const length = size * size;
     const particles = new Float32Array(length * 3);
+
     for (let i = 0; i < length; i++) {
       let i3 = i * 3;
       particles[i3 + 0] = (i % size) / size;
       particles[i3 + 1] = i / size / size;
     }
+
     return particles;
   }, [size]);
 
@@ -67,7 +72,7 @@ const Sphere = () => {
     }),
     [],
   );
-
+  let text;
   useFrame((state) => {
     const { gl, clock } = state;
 
@@ -76,11 +81,15 @@ const Sphere = () => {
     gl.render(scene, camera);
     gl.setRenderTarget(null);
 
+    console.log(text === renderTarget.texture);
+    text = renderTarget.texture;
+
     points.current.material.uniforms.uPositions.value = renderTarget.texture;
     points.current.material.uniforms.uPointSize.value = pointSize;
     points.current.material.uniforms.uColor.value = new THREE.Color(color);
 
     simulationMaterialRef.current.uniforms.uTime.value = clock.elapsedTime;
+    simulationMaterialRef.current.update();
   });
 
   return (
