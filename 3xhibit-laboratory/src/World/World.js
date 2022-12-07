@@ -1,7 +1,8 @@
 import Laboratory from './components/Laboratory';
+import Museum from './components/Museum';
 import useGlobal from '../hooks/useGlobal';
 import { LabControls } from './components/Controls';
-import { OrbitControls } from '@react-three/drei';
+import * as DREI from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { useEffect } from 'react';
 
@@ -21,7 +22,7 @@ const World = () => {
       {/* Lab */}
       {activeLocation === 'laboratory' ? (
         <>
-          <OrbitControls
+          <DREI.OrbitControls
             enablePan={false}
             enableRotate={false}
             zoomSpeed={0.5}
@@ -31,7 +32,9 @@ const World = () => {
           <Laboratory />
           <LabControls />
         </>
-      ) : null}
+      ) : (
+        <Museum />
+      )}
     </>
   );
 };
