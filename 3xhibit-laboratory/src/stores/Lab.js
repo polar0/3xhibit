@@ -1,3 +1,4 @@
+import useGlobal from '../hooks/useGlobal';
 import create from 'zustand';
 
 export default create((set) => ({
@@ -5,8 +6,7 @@ export default create((set) => ({
    * Room
    */
   // States
-  themes: ['light', 'dark'],
-  activeTheme: 'dark',
+  activeTheme: useGlobal.getState().defaultTheme,
   background: {
     color: 'ivory',
   },
@@ -53,10 +53,10 @@ export default create((set) => ({
   // States
   neonEnabled: true,
   neonColor: '#ffffff',
-  flashlightIntensity: 0,
+  // flashlightIntensity: 0,
   // Setters
   setNeonEnabled: (enabled) => set({ neonEnabled: enabled }),
   setNeonColor: (color) => set({ neonColor: color }),
-  setFlashlightIntensity: (intensity) =>
-    set({ flashlightIntensity: intensity }),
+  // setFlashlightIntensity: (intensity) =>
+  //   set({ flashlightIntensity: intensity }),
 }));
