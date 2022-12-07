@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "owner": "0x0000000000000000000000000000000000000000",
+    "traits": {
+      "colorA": "#d600ff",
+      "colorB": "#ff6900",
+      "intensity": 0.2,
+      "wireframe": true
+    }
+  },
+  {
+    "id": 2,
+    "owner": "0x0000000000000000000000000000000000000000",
+    "traits": {
+      "colorA": "#ff0000",
+      "colorB": "#00ff00",
+      "intensity": 0.5,
+      "wireframe": false
+    }
+  }
+]
