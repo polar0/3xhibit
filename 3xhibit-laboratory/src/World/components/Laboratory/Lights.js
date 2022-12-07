@@ -1,5 +1,5 @@
 import useLab from '../../../hooks/useLab';
-import { Environment, Lightformer } from '@react-three/drei';
+import * as DREI from '@react-three/drei';
 
 const Lights = () => {
   const { neonEnabled, neonColor } = useLab((state) => ({
@@ -9,8 +9,8 @@ const Lights = () => {
 
   return (
     <>
-      <Environment background>
-        <Lightformer
+      <DREI.Environment background>
+        <DREI.Lightformer
           position={1}
           rotation-x={Math.PI}
           scale={1}
@@ -18,7 +18,7 @@ const Lights = () => {
           intensity={neonEnabled ? 10 : 0}
           form='rect'
         />
-      </Environment>
+      </DREI.Environment>
 
       <ambientLight intensity={0.2} />
     </>

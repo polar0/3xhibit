@@ -1,6 +1,6 @@
 import World from './World';
-import { Canvas } from '@react-three/fiber';
 import Interface from './Interface';
+import { Canvas } from '@react-three/fiber';
 import { StrictMode } from 'react';
 
 export const App = () => {

@@ -1,9 +1,8 @@
 import SphereMaterial, { fragmentShader, vertexShader } from './shaders';
 import * as THREE from 'three';
 import { extend, useFrame } from '@react-three/fiber';
-import { PresentationControls, shaderMaterial } from '@react-three/drei';
+import * as DREI from '@react-three/drei';
 import { useMemo, useRef } from 'react';
-import { MathUtils } from 'three';
 
 extend({ SphereMaterial });
 
@@ -27,7 +26,7 @@ const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
     sphere.current.material.uniforms.uColorA.value = new THREE.Color(colorA);
     sphere.current.material.uniforms.uColorB.value = new THREE.Color(colorB);
 
-    sphere.current.material.uniforms.uIntensity.value = MathUtils.lerp(
+    sphere.current.material.uniforms.uIntensity.value = THREE.MathUtils.lerp(
       sphere.current.material.uniforms.uIntensity.value,
       sphereHover.current ? intensity + 0.45 : intensity + 0.05,
       0.02,
@@ -36,7 +35,7 @@ const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
 
   return (
     <>
-      <PresentationControls
+      <DREI.PresentationControls
         global
         polar={[-Infinity, Infinity]}
         config={{ mass: 0.5, tension: 200, friction: 26 }}
@@ -54,7 +53,7 @@ const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
             wireframe={wireframe}
           />
         </mesh>
-      </PresentationControls>
+      </DREI.PresentationControls>
     </>
   );
 };

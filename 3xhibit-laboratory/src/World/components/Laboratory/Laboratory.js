@@ -2,7 +2,7 @@ import Lights from './Lights';
 import Sphere from '../Sphere';
 import useLab from '../../../hooks/useLab';
 import useCreation from '../../../hooks/useCreation';
-import { MeshReflectorMaterial } from '@react-three/drei';
+import * as DREI from '@react-three/drei';
 import { useMemo } from 'react';
 
 const Laboratory = () => {
@@ -40,7 +40,7 @@ const Structure = () => {
       {/* Floor */}
       <mesh position-y={-2} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
@@ -57,7 +57,7 @@ const Structure = () => {
         scale={10}
       >
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
@@ -69,7 +69,7 @@ const Structure = () => {
       {/* Left wall */}
       <mesh position-x={-5} rotation-y={Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
@@ -81,7 +81,7 @@ const Structure = () => {
       {/* Right wall */}
       <mesh position-x={5} rotation-y={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
@@ -93,7 +93,7 @@ const Structure = () => {
       {/* Back wall */}
       <mesh position-z={5} rotation-x={Math.PI} scale={10}>
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
@@ -105,7 +105,7 @@ const Structure = () => {
       {/* Ceiling */}
       <mesh position-y={5} rotation-x={Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <MeshReflectorMaterial
+        <DREI.MeshReflectorMaterial
           resolution={512}
           color={floor.color}
           blur={[1000, 1000]}
