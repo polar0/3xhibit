@@ -1,3 +1,3 @@
-import Controls from './Controls';
+import LabControls from './LabControls';
 
-export default Controls;
+export { LabControls };

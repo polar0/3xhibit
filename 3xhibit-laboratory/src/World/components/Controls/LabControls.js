@@ -1,30 +1,18 @@
 import useLab from '../../../hooks/useLab';
 import useCreation from '../../../hooks/useCreation';
-import { useControls } from 'leva';
+import { useControls, button } from 'leva';
 
 const Controls = () => {
-  const {
-    themes,
-    activeTheme,
-    setTheme,
-    neonEnabled,
-    neonColor,
-    flashlightIntensity,
-    setNeonEnabled,
-    setNeonColor,
-    setFlashlightIntensity,
-  } = useLab((state) => ({
-    themes: state.themes,
-    activeTheme: state.activeTheme,
-    setTheme: state.setTheme,
-    background: state.background,
-    neonEnabled: state.neonEnabled,
-    neonColor: state.neonColor,
-    flashlightIntensity: state.flashlightIntensity,
-    setNeonEnabled: state.setNeonEnabled,
-    setNeonColor: state.setNeonColor,
-    setFlashlightIntensity: state.setFlashlightIntensity,
-  }));
+  const { neonEnabled, neonColor, setNeonEnabled, setNeonColor } = useLab(
+    (state) => ({
+      background: state.background,
+      neonEnabled: state.neonEnabled,
+      neonColor: state.neonColor,
+      flashlightIntensity: state.flashlightIntensity,
+      setNeonEnabled: state.setNeonEnabled,
+      setNeonColor: state.setNeonColor,
+    }),
+  );
 
   const {
     colorA,
@@ -35,6 +23,7 @@ const Controls = () => {
     setColorB,
     setIntensity,
     setWireframe,
+    randomize,
   } = useCreation((state) => ({
     colorA: state.colorA,
     colorB: state.colorB,
@@ -44,20 +33,10 @@ const Controls = () => {
     setColorB: state.setColorB,
     setIntensity: state.setIntensity,
     setWireframe: state.setWireframe,
+    randomize: state.randomize,
   }));
 
   useControls('Laboratory', {
-    Theme: {
-      value: activeTheme,
-      options: themes,
-      onChange: (theme) => setTheme(theme),
-    },
-    'Flashlight intensity': {
-      value: flashlightIntensity,
-      onChange: (intensity) => setFlashlightIntensity(intensity),
-      min: 0,
-      max: 1,
-    },
     Neon: {
       value: neonEnabled,
       onChange: (enabled) => setNeonEnabled(enabled),
@@ -87,6 +66,7 @@ const Controls = () => {
       value: wireframe,
       onChange: (wireframe) => setWireframe(wireframe),
     },
+    randomize: button(() => randomize()),
   });
 
   return null;
