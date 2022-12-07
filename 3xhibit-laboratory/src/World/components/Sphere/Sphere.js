@@ -1,22 +1,13 @@
-import useCreation from '../../../hooks/useCreation';
 import SphereMaterial, { fragmentShader, vertexShader } from './shaders';
 import * as THREE from 'three';
 import { extend, useFrame } from '@react-three/fiber';
 import { PresentationControls, shaderMaterial } from '@react-three/drei';
 import { useMemo, useRef } from 'react';
-import { useControls } from 'leva';
 import { MathUtils } from 'three';
 
 extend({ SphereMaterial });
 
-const Sphere = () => {
-  const { colorA, colorB, intensity, wireframe } = useCreation((state) => ({
-    colorA: state.colorA,
-    colorB: state.colorB,
-    intensity: state.intensity,
-    wireframe: state.wireframe,
-  }));
-
+const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
   const sphere = useRef();
   const sphereHover = useRef(false);
 
@@ -29,26 +20,6 @@ const Sphere = () => {
     }),
     [],
   );
-
-  const particles = useMemo(() => {
-    const particles = new THREE.BufferGeometry();
-    const count = 1000;
-    const positions = new Float32Array(count * 3);
-    const scales = new Float32Array(count);
-
-    for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-
-      scales[i] = Math.random();
-    }
-
-    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    particles.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
-
-    return particles;
-  }, []);
 
   useFrame(({ clock }) => {
     sphere.current.material.uniforms.uTime.value = clock.getElapsedTime() * 0.5;
@@ -69,7 +40,6 @@ const Sphere = () => {
         global
         polar={[-Infinity, Infinity]}
         config={{ mass: 0.5, tension: 200, friction: 26 }}
-        // Translate the rotation to a new vector
       >
         <mesh
           ref={sphere}
