@@ -10,4 +10,5 @@ export default create((set) => ({
   setColorB: (color) => set({ colorB: color }),
   setIntensity: (intensity) => set({ intensity }),
   setWireframe: (wireframe) => set({ wireframe }),
+  randomize: () => set({ colorA: getRandomColor(), colorB: getRandomColor() }),
 }));
