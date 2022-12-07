@@ -29,6 +29,7 @@ const Interface = () => {
   // Update location
   const updateLocation = (location) => {
     if (location !== activeLocation) {
+      // location === 'laboratory' ? destroyLaboratory() : destroyMuseum();
       setActiveLocation(location);
     }
   };

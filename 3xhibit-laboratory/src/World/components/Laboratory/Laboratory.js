@@ -1,14 +1,31 @@
 import Lights from './Lights';
 import Sphere from '../Sphere';
 import useLab from '../../../hooks/useLab';
+import useCreation from '../../../hooks/useCreation';
 import { MeshReflectorMaterial } from '@react-three/drei';
+import { useMemo } from 'react';
 
 const Laboratory = () => {
+  const structure = useMemo(() => <Structure />, []);
+  const lights = useMemo(() => <Lights />, []);
+
+  const { colorA, colorB, intensity, wireframe } = useCreation((state) => ({
+    colorA: state.colorA,
+    colorB: state.colorB,
+    intensity: state.intensity,
+    wireframe: state.wireframe,
+  }));
+
   return (
     <>
-      <Lights />
-      <Structure />
-      <Sphere />
+      {lights}
+      {structure}
+      <Sphere
+        colorA={colorA}
+        colorB={colorB}
+        intensity={intensity}
+        wireframe={wireframe}
+      />
     </>
   );
 };
