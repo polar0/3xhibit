@@ -2,8 +2,12 @@ import { getRandomColor } from '../utils/getRandomColor';
 import create from 'zustand';
 
 export default create((set) => ({
-  color: getRandomColor(),
-  pointSize: 3,
-  setColor: (color) => set({ color }),
-  setPointSize: (pointSize) => set({ pointSize }),
+  colorA: getRandomColor(),
+  colorB: getRandomColor(),
+  intensity: 0.2,
+  wireframe: false,
+  setColorA: (color) => set({ colorA: color }),
+  setColorB: (color) => set({ colorB: color }),
+  setIntensity: (intensity) => set({ intensity }),
+  setWireframe: (wireframe) => set({ wireframe }),
 }));

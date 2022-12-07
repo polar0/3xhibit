@@ -27,7 +27,7 @@ const Lights = () => {
         />
       </Environment>
 
-      <SpotLight
+      {/* <SpotLight
         position={[0, 2, 8]}
         intensity={flashlightIntensity}
         penumbra={1}
@@ -35,7 +35,7 @@ const Lights = () => {
         angle={1}
         attenuation={5}
         anglePower={4} // Diffuse-cone anglePower (default: 5)
-      />
+      /> */}
 
       <RandomizedLight
         castShadow

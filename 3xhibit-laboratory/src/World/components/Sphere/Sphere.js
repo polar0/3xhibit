@@ -1,155 +1,71 @@
 import useCreation from '../../../hooks/useCreation';
-import SimulationMaterial from './SimulationMaterial';
-import { vertexShader, fragmentShader } from './shaders';
+import SphereMaterial, { fragmentShader, vertexShader } from './shaders';
 import * as THREE from 'three';
-import { createPortal, extend, useFrame } from '@react-three/fiber';
-import { Center, Float, PresentationControls, useFBO } from '@react-three/drei';
+import { extend, useFrame } from '@react-three/fiber';
+import { PresentationControls, shaderMaterial } from '@react-three/drei';
 import { useMemo, useRef } from 'react';
 import { useControls } from 'leva';
+import { MathUtils } from 'three';
 
-extend({ SimulationMaterial });
+extend({ SphereMaterial });
 
 const Sphere = () => {
-  const { color, pointSize } = useCreation((state) => ({
-    color: state.color,
-    pointSize: state.pointSize,
+  const { colorA, colorB, intensity, wireframe } = useCreation((state) => ({
+    colorA: state.colorA,
+    colorB: state.colorB,
+    intensity: state.intensity,
+    wireframe: state.wireframe,
   }));
 
-  const size = 128;
-
-  const points = useRef();
-  const simulationMaterialRef = useRef();
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.OrthographicCamera(
-    -1,
-    1,
-    1,
-    -1,
-    1 / Math.pow(2, 53),
-    1,
-  );
-  const positions = new Float32Array([
-    -1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0,
-  ]);
-  const uvs = new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]);
-
-  // Rendertarget.texture must be updated when changing things such as lights
-  // we need to prevent this
-
-  const renderTarget = useFBO(size, size, {
-    minFilter: THREE.NearestFilter,
-    magFilter: THREE.NearestFilter,
-    format: THREE.RGBAFormat,
-    stencilBuffer: false,
-    type: THREE.FloatType,
-  });
-
-  const particlesPosition = useMemo(() => {
-    const length = size * size;
-    const particles = new Float32Array(length * 3);
-
-    for (let i = 0; i < length; i++) {
-      let i3 = i * 3;
-      particles[i3 + 0] = (i % size) / size;
-      particles[i3 + 1] = i / size / size;
-    }
-
-    return particles;
-  }, [size]);
+  const sphere = useRef();
+  const sphereHover = useRef(false);
 
   const uniforms = useMemo(
     () => ({
-      uPositions: {
-        value: null,
-      },
-      uPointSize: {
-        value: pointSize,
-      },
-      uColor: {
-        value: new THREE.Color(color),
-      },
+      uTime: { value: 0 },
+      uColorA: { value: new THREE.Color(colorA) },
+      uColorB: { value: new THREE.Color(colorB) },
+      uIntensity: { value: intensity },
     }),
     [],
   );
-  let text;
-  useFrame((state) => {
-    const { gl, clock } = state;
 
-    gl.setRenderTarget(renderTarget);
-    gl.clear();
-    gl.render(scene, camera);
-    gl.setRenderTarget(null);
+  useFrame(({ clock }) => {
+    sphere.current.material.uniforms.uTime.value = clock.getElapsedTime() * 0.5;
 
-    console.log(text === renderTarget.texture);
-    text = renderTarget.texture;
+    sphere.current.material.uniforms.uColorA.value = new THREE.Color(colorA);
+    sphere.current.material.uniforms.uColorB.value = new THREE.Color(colorB);
 
-    points.current.material.uniforms.uPositions.value = renderTarget.texture;
-    points.current.material.uniforms.uPointSize.value = pointSize;
-    points.current.material.uniforms.uColor.value = new THREE.Color(color);
-
-    simulationMaterialRef.current.uniforms.uTime.value = clock.elapsedTime;
-    simulationMaterialRef.current.update();
+    sphere.current.material.uniforms.uIntensity.value = MathUtils.lerp(
+      sphere.current.material.uniforms.uIntensity.value,
+      sphereHover.current ? intensity + 0.45 : intensity + 0.05,
+      0.02,
+    );
   });
 
   return (
     <>
-      {/* <Float> */}
       <PresentationControls
         global
         polar={[-Infinity, Infinity]}
         config={{ mass: 0.5, tension: 200, friction: 26 }}
+        // Translate the rotation to a new vector
       >
-        {/* <Center> */}
-        {/* <mesh position={[0, 0.5, 0]}>
-              <sphereGeometry args={[1, 64, 32]} />
-              <meshStandardMaterial
-                color={color}
-                flatShading
-                roughness={0}
-                metalness={0}
-              />
-            </mesh> */}
-        {createPortal(
-          <mesh>
-            <simulationMaterial ref={simulationMaterialRef} args={[size]} />
-            <bufferGeometry>
-              <bufferAttribute
-                attach='attributes-position'
-                count={positions.length / 3}
-                array={positions}
-                itemSize={3}
-              />
-              <bufferAttribute
-                attach='attributes-uv'
-                count={uvs.length / 2}
-                array={uvs}
-                itemSize={2}
-              />
-            </bufferGeometry>
-          </mesh>,
-          scene,
-        )}
-        <points ref={points}>
-          <bufferGeometry>
-            <bufferAttribute
-              attach='attributes-position'
-              count={particlesPosition.length / 3}
-              array={particlesPosition}
-              itemSize={3}
-            />
-          </bufferGeometry>
+        <mesh
+          ref={sphere}
+          onPointerOver={() => (sphereHover.current = true)}
+          onPointerOut={() => (sphereHover.current = false)}
+        >
+          {/* <sphereGeometry args={[1, 64, 32]} /> */}
+          <icosahedronGeometry args={[1, 20]} />
           <shaderMaterial
-            blending={THREE.AdditiveBlending}
-            depthWrite={false}
-            fragmentShader={fragmentShader}
-            vertexShader={vertexShader}
             uniforms={uniforms}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            wireframe={wireframe}
           />
-        </points>
-        {/* </Center> */}
+        </mesh>
       </PresentationControls>
-      {/* </Float> */}
     </>
   );
 };

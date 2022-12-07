@@ -26,11 +26,24 @@ const Controls = () => {
     setFlashlightIntensity: state.setFlashlightIntensity,
   }));
 
-  const { color, pointSize, setColor, setPointSize } = useCreation((state) => ({
-    color: state.color,
-    pointSize: state.pointSize,
-    setColor: state.setColor,
-    setPointSize: state.setPointSize,
+  const {
+    colorA,
+    colorB,
+    intensity,
+    wireframe,
+    setColorA,
+    setColorB,
+    setIntensity,
+    setWireframe,
+  } = useCreation((state) => ({
+    colorA: state.colorA,
+    colorB: state.colorB,
+    intensity: state.intensity,
+    wireframe: state.wireframe,
+    setColorA: state.setColorA,
+    setColorB: state.setColorB,
+    setIntensity: state.setIntensity,
+    setWireframe: state.setWireframe,
   }));
 
   useControls('Laboratory', {
@@ -56,15 +69,23 @@ const Controls = () => {
   });
 
   useControls('Creation', {
-    color: {
-      value: color,
-      onChange: (color) => setColor(color),
+    colorA: {
+      value: colorA,
+      onChange: (color) => setColorA(color),
     },
-    'point size': {
-      value: pointSize,
-      onChange: (pointSize) => setPointSize(pointSize),
-      min: 1,
-      max: 6,
+    colorB: {
+      value: colorB,
+      onChange: (color) => setColorB(color),
+    },
+    intensity: {
+      value: intensity,
+      onChange: (intensity) => setIntensity(intensity),
+      min: 0,
+      max: 0.5,
+    },
+    wireframe: {
+      value: wireframe,
+      onChange: (wireframe) => setWireframe(wireframe),
     },
   });
 
