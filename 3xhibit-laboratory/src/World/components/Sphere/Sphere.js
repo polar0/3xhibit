@@ -30,6 +30,26 @@ const Sphere = () => {
     [],
   );
 
+  const particles = useMemo(() => {
+    const particles = new THREE.BufferGeometry();
+    const count = 1000;
+    const positions = new Float32Array(count * 3);
+    const scales = new Float32Array(count);
+
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+
+      scales[i] = Math.random();
+    }
+
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particles.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
+
+    return particles;
+  }, []);
+
   useFrame(({ clock }) => {
     sphere.current.material.uniforms.uTime.value = clock.getElapsedTime() * 0.5;
 
@@ -56,7 +76,6 @@ const Sphere = () => {
           onPointerOver={() => (sphereHover.current = true)}
           onPointerOut={() => (sphereHover.current = false)}
         >
-          {/* <sphereGeometry args={[1, 64, 32]} /> */}
           <icosahedronGeometry args={[1, 20]} />
           <shaderMaterial
             uniforms={uniforms}
