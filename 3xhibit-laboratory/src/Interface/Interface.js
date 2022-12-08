@@ -4,7 +4,7 @@ import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 
 const Interface = () => {
-  const [showInterface, setShowInterface] = useState(true);
+  const [showInterface, setShowInterface] = useState(false);
 
   const { defaultTheme, setTheme, activeLocation, setActiveLocation } =
     useGlobal((state) => ({

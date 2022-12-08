@@ -10,10 +10,7 @@ export default create((set) => ({
   background: {
     color: 'ivory',
   },
-  floor: {
-    color: 'ivory',
-  },
-  walls: {
+  material: {
     color: 'ivory',
   },
   // Setters
@@ -25,10 +22,7 @@ export default create((set) => ({
           background: {
             color: 'ivory',
           },
-          floor: {
-            color: 'ivory',
-          },
-          walls: {
+          material: {
             color: 'ivory',
           },
         }))
@@ -38,11 +32,8 @@ export default create((set) => ({
           background: {
             color: '#131313',
           },
-          floor: {
+          material: {
             color: '#5f5f5f',
-          },
-          walls: {
-            color: '#131313',
           },
         }));
   },

@@ -31,8 +31,8 @@ const Laboratory = () => {
 };
 
 const Structure = () => {
-  const { floor } = useLab((state) => ({
-    floor: state.floor,
+  const { material } = useLab((state) => ({
+    material: state.material,
   }));
 
   return (
@@ -42,7 +42,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
@@ -59,7 +59,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
@@ -71,7 +71,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
@@ -83,7 +83,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
@@ -95,7 +95,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
@@ -107,7 +107,7 @@ const Structure = () => {
         <planeGeometry />
         <DREI.MeshReflectorMaterial
           resolution={512}
-          color={floor.color}
+          color={material.color}
           blur={[1000, 1000]}
           mixBlur={1}
           mirror={0.5}
