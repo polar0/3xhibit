@@ -1,5 +1,4 @@
 import useGlobal from '../hooks/useGlobal';
-import useLab from '../hooks/useLab';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 
@@ -14,16 +13,9 @@ const Interface = () => {
       setActiveLocation: state.setActiveLocation,
     }));
 
-  const { setTheme: setLabTheme } = useLab((state) => ({
-    setTheme: state.setTheme,
-  }));
-
   // Update theme
   const updateTheme = (theme) => {
-    if (theme !== defaultTheme) {
-      setTheme(theme);
-      setLabTheme(theme);
-    }
+    if (theme !== defaultTheme) setTheme(theme);
   };
 
   // Update location

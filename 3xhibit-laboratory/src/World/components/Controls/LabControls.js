@@ -5,10 +5,8 @@ import { useControls, button } from 'leva';
 const Controls = () => {
   const { neonEnabled, neonColor, setNeonEnabled, setNeonColor } = useLab(
     (state) => ({
-      background: state.background,
       neonEnabled: state.neonEnabled,
       neonColor: state.neonColor,
-      flashlightIntensity: state.flashlightIntensity,
       setNeonEnabled: state.setNeonEnabled,
       setNeonColor: state.setNeonColor,
     }),

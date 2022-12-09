@@ -1,9 +1,9 @@
 import Lights from './Lights';
 import Sphere from '../Sphere';
-import useLab from '../../../hooks/useLab';
 import useCreation from '../../../hooks/useCreation';
 import * as DREI from '@react-three/drei';
 import { useMemo } from 'react';
+import useGlobal from '../../../hooks/useGlobal';
 
 const Laboratory = () => {
   const structure = useMemo(() => <Structure />, []);
@@ -31,7 +31,7 @@ const Laboratory = () => {
 };
 
 const Structure = () => {
-  const { material } = useLab((state) => ({
+  const { material } = useGlobal((state) => ({
     material: state.material,
   }));
 
