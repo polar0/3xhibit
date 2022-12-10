@@ -1,10 +1,20 @@
+import useGlobal from '../../../hooks/useGlobal';
+import useCreated from '../../../hooks/useCreated';
 import * as DREI from '@react-three/drei';
 import { RigidBody } from '@react-three/rapier';
-import { useMemo } from 'react';
-import useGlobal from '../../../hooks/useGlobal';
+import { useEffect, useMemo } from 'react';
 
 const Museum = () => {
   const structure = useMemo(() => <Structure />, []);
+  const { created, getCreated, isLoading, isLoaded, isError } = useCreated();
+
+  useEffect(() => {
+    getCreated();
+  }, []);
+
+  useEffect(() => {
+    console.log(created);
+  }, [created]);
 
   return (
     <>
