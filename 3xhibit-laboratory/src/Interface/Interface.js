@@ -3,40 +3,60 @@ import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 
 const Interface = () => {
-  const [showInterface, setShowInterface] = useState(false);
-
-  const { defaultTheme, setTheme, activeLocation, setActiveLocation } =
-    useGlobal((state) => ({
-      defaultTheme: state.defaultTheme,
-      setTheme: state.setTheme,
-      activeLocation: state.activeLocation,
-      setActiveLocation: state.setActiveLocation,
-    }));
+  const {
+    defaultTheme,
+    setTheme,
+    activeLocation,
+    setActiveLocation,
+    showInterface,
+    setShowInterface,
+  } = useGlobal((state) => ({
+    defaultTheme: state.defaultTheme,
+    setTheme: state.setTheme,
+    activeLocation: state.activeLocation,
+    setActiveLocation: state.setActiveLocation,
+    showInterface: state.showInterface,
+    setShowInterface: state.setShowInterface,
+  }));
 
   // Update theme
-  const updateTheme = (theme) => {
+  const updateTheme = (e, theme) => {
     if (theme !== defaultTheme) setTheme(theme);
+    e.stopPropagation();
   };
 
   // Update location
-  const updateLocation = (location) => {
+  const updateLocation = (e, location) => {
     if (location !== activeLocation) {
-      // location === 'laboratory' ? destroyLaboratory() : destroyMuseum();
       setActiveLocation(location);
+    }
+    e.stopPropagation();
+  };
+
+  // Show interface with escape key
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      setShowInterface(true);
     }
   };
 
-  // Toggle interface on/off with escape key
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setShowInterface((showInterface) => !showInterface);
-      }
-    };
+  // Hide interface on click
+  const handleOverlayClick = (e) => {
+    // Doesn't need to be handled in the museum
+    if (activeLocation === 'museum') return;
+    console.log(e.target);
+    setShowInterface(false);
+  };
 
+  useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+    window.addEventListener('click', handleOverlayClick);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('click', handleOverlayClick);
+    };
+  }, [activeLocation]);
 
   // Add/remove visible class to overlay
   useEffect(() => {
@@ -47,6 +67,7 @@ const Interface = () => {
     } else {
       overlay.classList.remove('visible');
     }
+    console.log('now', showInterface);
   }, [showInterface]);
 
   return (
@@ -72,14 +93,14 @@ const Interface = () => {
               <div className='interface__theme'>
                 <button
                   className={defaultTheme === 'dark' ? 'active' : ''}
-                  onClick={() => updateTheme('dark')}
+                  onClick={(e) => updateTheme(e, 'dark')}
                 >
                   Dark
                 </button>
                 <div className='separator'>/</div>
                 <button
                   className={defaultTheme === 'light' ? 'active' : ''}
-                  onClick={() => updateTheme('light')}
+                  onClick={(e) => updateTheme(e, 'light')}
                 >
                   Light
                 </button>
@@ -88,14 +109,14 @@ const Interface = () => {
               <div className='interface__location'>
                 <button
                   className={activeLocation === 'museum' ? 'active' : ''}
-                  onClick={() => updateLocation('museum')}
+                  onClick={(e) => updateLocation(e, 'museum')}
                 >
                   Museum
                 </button>
                 <div className='separator'>/</div>
                 <button
                   className={activeLocation === 'laboratory' ? 'active' : ''}
-                  onClick={() => updateLocation('laboratory')}
+                  onClick={(e) => updateLocation(e, 'laboratory')}
                 >
                   Laboratory
                 </button>
@@ -109,3 +130,8 @@ const Interface = () => {
 };
 
 export default Interface;
+
+// setShowInterface with event listener on escape only in laboratory
+// Back to 'game' button
+// Prevent default on click in any other place
+// When going back to laboratory reset camera position

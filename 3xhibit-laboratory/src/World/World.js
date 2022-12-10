@@ -8,9 +8,10 @@ import { useEffect } from 'react';
 import { Physics } from '@react-three/rapier';
 
 const World = () => {
-  const { activeLocation, gravity } = useGlobal((state) => ({
+  const { activeLocation, gravity, setShowInterface } = useGlobal((state) => ({
     activeLocation: state.activeLocation,
     gravity: state.gravity,
+    setShowInterface: state.setShowInterface,
   }));
 
   useEffect(() => {
@@ -40,7 +41,10 @@ const World = () => {
             <Museum />
             <Player />
           </Physics>
-          <DREI.PointerLockControls />
+          <DREI.PointerLockControls
+            onLock={() => setShowInterface(false)}
+            onUnlock={() => setShowInterface(true)}
+          />
         </>
       )}
     </>

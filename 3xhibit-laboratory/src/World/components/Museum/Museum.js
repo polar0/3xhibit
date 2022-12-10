@@ -9,7 +9,6 @@ const Museum = () => {
   return (
     <>
       <DREI.Environment preset='city' />
-      <DREI.OrbitControls />
       {structure}
       <mesh position-y={2}>
         <sphereGeometry />

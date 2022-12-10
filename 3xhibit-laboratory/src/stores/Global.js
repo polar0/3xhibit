@@ -48,4 +48,8 @@ export default create((set) => ({
   // Player
   speed: 5,
   setSpeed: (speed) => set({ speed }),
+
+  // Interface
+  showInterface: false,
+  setShowInterface: (showInterface) => set({ showInterface }),
 }));

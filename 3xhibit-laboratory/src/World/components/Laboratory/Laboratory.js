@@ -1,9 +1,10 @@
 import Lights from './Lights';
 import Sphere from '../Sphere';
+import useGlobal from '../../../hooks/useGlobal';
 import useCreation from '../../../hooks/useCreation';
+import { useThree } from '@react-three/fiber';
 import * as DREI from '@react-three/drei';
 import { useMemo } from 'react';
-import useGlobal from '../../../hooks/useGlobal';
 
 const Laboratory = () => {
   const structure = useMemo(() => <Structure />, []);
@@ -15,6 +16,9 @@ const Laboratory = () => {
     intensity: state.intensity,
     wireframe: state.wireframe,
   }));
+
+  const { camera } = useThree();
+  camera.position.set(0, 2, 8);
 
   return (
     <>
