@@ -1,14 +1,16 @@
 import Laboratory from './components/Laboratory';
-import Museum from './components/Museum';
+import Museum, { Player } from './components/Museum';
 import useGlobal from '../hooks/useGlobal';
 import { LabControls } from './components/Controls';
 import * as DREI from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { useEffect } from 'react';
+import { Physics } from '@react-three/rapier';
 
 const World = () => {
-  const { activeLocation } = useGlobal((state) => ({
+  const { activeLocation, gravity } = useGlobal((state) => ({
     activeLocation: state.activeLocation,
+    gravity: state.gravity,
   }));
 
   useEffect(() => {
@@ -33,7 +35,13 @@ const World = () => {
           <LabControls />
         </>
       ) : (
-        <Museum />
+        <>
+          <Physics gravity={gravity}>
+            <Museum />
+            <Player />
+          </Physics>
+          <DREI.PointerLockControls />
+        </>
       )}
     </>
   );

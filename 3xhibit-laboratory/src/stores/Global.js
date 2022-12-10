@@ -5,6 +5,14 @@ export default create((set) => ({
   activeLocation: 'museum',
   setActiveLocation: (location) => set({ activeLocation: location }),
 
+  // Materials
+  background: {
+    color: 'ivory',
+  },
+  material: {
+    color: 'ivory',
+  },
+
   // Theme
   defaultTheme: 'light',
   setTheme: (theme) => {
@@ -30,11 +38,14 @@ export default create((set) => ({
           },
         }));
   },
-  // Default
-  background: {
-    color: 'ivory',
-  },
-  material: {
-    color: 'ivory',
-  },
+
+  /**
+   * Museum
+   */
+  // Physics
+  gravity: [0, -9.81, 0],
+  setGravity: (gravity) => set({ gravity }),
+  // Player
+  speed: 5,
+  setSpeed: (speed) => set({ speed }),
 }));
