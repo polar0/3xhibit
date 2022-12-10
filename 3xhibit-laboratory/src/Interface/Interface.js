@@ -3,6 +3,8 @@ import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
 
 const Interface = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const {
     defaultTheme,
     setTheme,
@@ -73,7 +75,16 @@ const Interface = () => {
   return (
     <>
       <Leva />
-      <div id='overlay'>
+      <div
+        id='overlay'
+        onMouseOver={(e) => {
+          if (e.target.type !== 'submit') {
+            setIsHovered(true);
+          } else {
+            setIsHovered(false);
+          }
+        }}
+      >
         <div
           className={
             defaultTheme === 'dark' ? 'interface dark' : 'interface light'
@@ -90,7 +101,8 @@ const Interface = () => {
               </span>
             </div>
             <div className='interface__content'>
-              <div className='interface__theme'>
+              <div className='interface__rows'>
+                {/* Theme */}
                 <button
                   className={defaultTheme === 'dark' ? 'active' : ''}
                   onClick={(e) => updateTheme(e, 'dark')}
@@ -104,9 +116,7 @@ const Interface = () => {
                 >
                   Light
                 </button>
-              </div>
-
-              <div className='interface__location'>
+                {/* Location */}
                 <button
                   className={activeLocation === 'museum' ? 'active' : ''}
                   onClick={(e) => updateLocation(e, 'museum')}
@@ -122,6 +132,11 @@ const Interface = () => {
                 </button>
               </div>
             </div>
+            <div className='interface__back'>
+              <div className={isHovered ? 'mock-btn active' : 'mock-btn'}>
+                Back to {activeLocation === 'museum' ? 'museum' : 'laboratory'}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -130,8 +145,3 @@ const Interface = () => {
 };
 
 export default Interface;
-
-// setShowInterface with event listener on escape only in laboratory
-// Back to 'game' button
-// Prevent default on click in any other place
-// When going back to laboratory reset camera position
