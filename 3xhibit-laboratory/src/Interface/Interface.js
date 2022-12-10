@@ -1,3 +1,4 @@
+import { Crosshair } from './index';
 import useGlobal from '../hooks/useGlobal';
 import { Leva } from 'leva';
 import { useEffect, useState } from 'react';
@@ -12,14 +13,7 @@ const Interface = () => {
     setActiveLocation,
     showInterface,
     setShowInterface,
-  } = useGlobal((state) => ({
-    defaultTheme: state.defaultTheme,
-    setTheme: state.setTheme,
-    activeLocation: state.activeLocation,
-    setActiveLocation: state.setActiveLocation,
-    showInterface: state.showInterface,
-    setShowInterface: state.setShowInterface,
-  }));
+  } = useGlobal();
 
   // Update theme
   const updateTheme = (e, theme) => {
@@ -46,13 +40,14 @@ const Interface = () => {
   const handleOverlayClick = (e) => {
     // Doesn't need to be handled in the museum
     if (activeLocation === 'museum') return;
-    console.log(e.target);
     setShowInterface(false);
   };
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('click', handleOverlayClick);
+    document
+      .querySelector('#overlay')
+      .addEventListener('click', handleOverlayClick);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
@@ -69,12 +64,14 @@ const Interface = () => {
     } else {
       overlay.classList.remove('visible');
     }
-    console.log('now', showInterface);
   }, [showInterface]);
 
   return (
     <>
       <Leva />
+      {/* {activeLocation === 'museum' ? <Crosshair /> : null} */}
+      <Crosshair />
+
       <div
         id='overlay'
         onMouseOver={(e) => {

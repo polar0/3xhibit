@@ -6,7 +6,13 @@ import { useMemo, useRef } from 'react';
 
 extend({ SphereMaterial });
 
-const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
+const Sphere = ({
+  colorA,
+  colorB,
+  intensity,
+  wireframe,
+  position = [0, 0, 0],
+}) => {
   const sphere = useRef();
   const sphereHover = useRef(false);
 
@@ -35,25 +41,20 @@ const Sphere = ({ colorA, colorB, intensity, wireframe }) => {
 
   return (
     <>
-      <DREI.PresentationControls
-        global
-        polar={[-Infinity, Infinity]}
-        config={{ mass: 0.5, tension: 200, friction: 26 }}
+      <mesh
+        ref={sphere}
+        position={position}
+        onPointerOver={() => (sphereHover.current = true)}
+        onPointerOut={() => (sphereHover.current = false)}
       >
-        <mesh
-          ref={sphere}
-          onPointerOver={() => (sphereHover.current = true)}
-          onPointerOut={() => (sphereHover.current = false)}
-        >
-          <icosahedronGeometry args={[1, 20]} />
-          <shaderMaterial
-            uniforms={uniforms}
-            vertexShader={vertexShader}
-            fragmentShader={fragmentShader}
-            wireframe={wireframe}
-          />
-        </mesh>
-      </DREI.PresentationControls>
+        <icosahedronGeometry args={[1, 20]} />
+        <shaderMaterial
+          uniforms={uniforms}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
+          wireframe={wireframe}
+        />
+      </mesh>
     </>
   );
 };

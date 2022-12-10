@@ -9,8 +9,6 @@ export default create((set) => ({
   getCreated: async () => {
     set({ isLoading: true });
     try {
-      //   const response = await fetch('/api/created');
-      //   const created = await response.json();
       const created = mockCreated;
       set({ created, isLoading: false, isLoaded: true });
     } catch (error) {

@@ -7,15 +7,26 @@ import * as DREI from '@react-three/drei';
 import { useMemo } from 'react';
 
 const Laboratory = () => {
-  const structure = useMemo(() => <Structure />, []);
-  const lights = useMemo(() => <Lights />, []);
-
   const { colorA, colorB, intensity, wireframe } = useCreation((state) => ({
     colorA: state.colorA,
     colorB: state.colorB,
     intensity: state.intensity,
     wireframe: state.wireframe,
   }));
+
+  const structure = useMemo(() => <Structure />, []);
+  const lights = useMemo(() => <Lights />, []);
+  const sphere = useMemo(
+    () => (
+      <Sphere
+        colorA={colorA}
+        colorB={colorB}
+        intensity={intensity}
+        wireframe={wireframe}
+      />
+    ),
+    [],
+  );
 
   const { camera } = useThree();
   camera.position.set(0, 2, 8);
@@ -24,12 +35,13 @@ const Laboratory = () => {
     <>
       {lights}
       {structure}
-      <Sphere
-        colorA={colorA}
-        colorB={colorB}
-        intensity={intensity}
-        wireframe={wireframe}
-      />
+      <DREI.PresentationControls
+        global
+        polar={[-Infinity, Infinity]}
+        config={{ mass: 0.5, tension: 200, friction: 26 }}
+      >
+        {sphere}
+      </DREI.PresentationControls>
     </>
   );
 };

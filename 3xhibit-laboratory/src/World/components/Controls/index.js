@@ -1,3 +1,4 @@
 import LabControls from './LabControls';
+import Player from './Player';
 
-export { LabControls };
+export { LabControls, Player };

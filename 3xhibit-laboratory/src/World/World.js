@@ -1,7 +1,7 @@
 import Laboratory from './components/Laboratory';
-import Museum, { Player } from './components/Museum';
+import Museum from './components/Museum';
 import useGlobal from '../hooks/useGlobal';
-import { LabControls } from './components/Controls';
+import { LabControls, Player } from './components/Controls';
 import * as DREI from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { useEffect } from 'react';

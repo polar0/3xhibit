@@ -4,7 +4,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as DREI from '@react-three/drei';
 import { CapsuleCollider, RigidBody, useRapier } from '@react-three/rapier';
 import { Ray as RapierRay } from '@dimforge/rapier3d-compat';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const direction = new THREE.Vector3();
 const frontVector = new THREE.Vector3();
@@ -52,7 +52,7 @@ const Player = () => {
         colliders={false}
         mass={1}
         type='dynamic'
-        position={[0, 10, 0]}
+        position={[0, 2, 0]}
         enabledRotations={[false, false, false]}
       >
         <CapsuleCollider args={[0.75, 0.5]} />
