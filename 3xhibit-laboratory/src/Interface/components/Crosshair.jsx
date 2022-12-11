@@ -1,24 +1,12 @@
+import useInteract from '../../hooks/useInteract';
 import { useEffect, useState } from 'react';
 
 const Crosshair = () => {
-  const [isActive, setIsActive] = useState(false);
-  // Toggle on click
-  const handleClick = () => {
-    setIsActive((prev) => !prev);
-  };
-
-  useEffect(() => {
-    window.addEventListener('click', handleClick);
-    return () => {
-      window.removeEventListener('click', handleClick);
-    };
-  }, []);
+  const { currentState } = useInteract();
 
   return (
     <div className='crosshair__wrapper'>
-      <div
-        className={isActive ? 'crosshair__dot active' : 'crosshair__dot'}
-      ></div>
+      <div className={`crosshair__dot ${currentState}`}></div>
     </div>
   );
 };
